@@ -37,14 +37,21 @@ class AsyncSpongeBob:
 
     async def make_milkshake(self):
         await asyncio.sleep(5)
+
+    async def make_sandwich(self):
+        await asyncio.gather(
+            self.cook_bread(),
+            self.cook_hamburger()
+        )
+        #renomeando a instancia do event_loop
+        event_loop = asyncio.get_running_loop()
+        event_loop.create_task(self.assemble_sandwich())
     
     async def cook(self):
         await asyncio.gather(
-            self.cook_bread(),
-            self.cook_hamburger(),
+            self.make_sandwich(),
             self.make_milkshake()
         )
-        await self.assemble_sandwich()
 
 tempo = time()
 sync_spongebob = SyncSpongeBob()
